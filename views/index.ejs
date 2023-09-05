@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belajar CRUD</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body style="margin-top: 10px;">
+    <div class="container">
+        <div style="display: flex; justify-content: space-between;">
+            <h3><%= title %></h3>
+            <a href="tambah" class="btn btn-primary" >Tambah Siswa</a>    
+        </div>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">NIM</th>
+                <th scope="col">Nama Lengkap</th>
+                <th scope="col">Kelas</th>
+                <th scope="col">Alamat</th>
+                <th scope="col">Email</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+                <% for(let user of users) { %> 
+                    <tr>
+                        <th scope="row"><%= user.id %></th>
+                        <th scope="row"><%= user.nim %></th>
+                        <th scope="row"><%= user.nama_lengkap%></th>
+                        <th scope="row"><%= user.kelas %></th>
+                        <th scope="row"> <%= user.alamat %></th>
+                        <th scope="row"> <%= user.email %></th>
+                        <th scope="row"> <a href="update/<%= user.id %>">Update</a>  | <a href="/delete/<%= user.id %>">Delete</a></th>
+                    </tr>
+                <% } %>
+            </tbody>
+          </table>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</body>
+</html>
