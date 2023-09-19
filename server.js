@@ -77,6 +77,6 @@ db.connect((err) => {
     }
     console.log("Database is connected...")
     app.listen(3000, () => {
-        console.log("Server is running...")
+        console.log("Server is running on port 3000")
     })
 })
