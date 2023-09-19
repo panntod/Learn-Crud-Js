@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json()); // Middleware untuk meng-handle JSON data
 
 app.set("view engine", "ejs");
 app.set("views", "views");
@@ -36,8 +37,27 @@ app.get("/update/:id", (req, res) => {
   });
 });
 
-app.get("delete/:id", function (req, res) {
-  res.render("delete");
+app.get("/delete/:id", (req, res) => {
+  const id_siswa = req.params.id; 
+  if (id_siswa) {
+    if (isNaN(id_siswa)) {
+      res.status(400).json({ message: "ID siswa tidak valid" });
+      return;
+    }
+
+    const deleteSql = `DELETE FROM users WHERE id = ${id_siswa}`;
+
+    db.query(deleteSql, (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ message: "Gagal menghapus siswa" });
+      } else {
+        res.status(200).json({ message: "Sukses menghapus siswa" });
+      }
+    });
+  } else {
+    res.status(400).json({ message: "ID siswa tidak valid" });
+  }
 });
 
 app.post("/tambah", (req, res) => {
@@ -50,22 +70,8 @@ app.post("/tambah", (req, res) => {
   });
 });
 
-app.delete("/delete/:id", (req, res) => {
-  const id = req.params.id;
-  const sql = `DELETE FROM siswa WHERE id = ?`;
-  db.query(sql, [id], (err, result) => {
-    if (err) {
-      console.error(err);
-      res.status(500).json({ message: "Gagal hapus siswa" });
-    } else {
-      res.status(200).json({ message: "Sukses hapus siswa" });
-    }
-  });
-});
-
 app.put("/update/:id", (req, res) => {
-  const id = req.params.id;
-  const updateSql = `UPDATE users nim='${req.body.nim}', nama_lengkap='${req.body.nama_lengkap}', kelas='${req.body.kelas}', alamat='${req.body.alamat}', email='${req.body.email}') WHERE id = '${req.body.id};`;
+  const updateSql = `UPDATE users SET nim='${req.body.nim}', nama_lengkap='${req.body.nama_lengkap}', kelas='${req.body.kelas}', alamat='${req.body.alamat}', email='${req.body.email}' WHERE id = ${req.body.id}`;
 
   db.query(updateSql, (err, result) => {
     if (err) throw err;
