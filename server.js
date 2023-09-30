@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.json()); // Middleware untuk meng-handle JSON data
+app.use(express.json());
 
 app.set("view engine", "ejs");
 app.set("views", "views");
@@ -29,11 +29,35 @@ app.get("/tambah", (req, res) => {
   res.render("tambah");
 });
 
+app.post("/tambah", (req, res) => {
+  const insertSql = `INSERT INTO users (id, nim, nama_lengkap, kelas, alamat, email) VALUES 
+    (null, '${req.body.nim}', '${req.body.nama_lengkap}', '${req.body.kelas}', '${req.body.alamat}', '${req.body.email}');`;
+
+  db.query(insertSql, (err, result) => {
+    if (err) throw err;
+    res.redirect("/");
+  });
+});
+
 app.get("/update/:id", (req, res) => {
   const sql = `SELECT * FROM users WHERE id = ${req.params.id}`;
   db.query(sql, (err, result) => {
     const userData = JSON.parse(JSON.stringify(result));
     res.render("update", { users: userData });
+  });
+});
+
+app.post("/update/:id", (req, res) => {
+  const id = req.params.id;
+  const updateSql = `UPDATE users SET nim='${req.body.nim}', nama_lengkap='${req.body.nama_lengkap}', kelas='${req.body.kelas}', alamat='${req.body.alamat}', email='${req.body.email}' WHERE id = ${id}`;
+
+  db.query(updateSql, (err, result) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ message: "Gagal mengupdate data" });
+    } else {
+      res.redirect("/");
+    }
   });
 });
 
@@ -58,25 +82,6 @@ app.get("/delete/:id", (req, res) => {
   } else {
     res.status(400).json({ message: "ID siswa tidak valid" });
   }
-});
-
-app.post("/tambah", (req, res) => {
-  const insertSql = `INSERT INTO users (id, nim, nama_lengkap, kelas, alamat, email) VALUES 
-    (null, '${req.body.nim}', '${req.body.nama_lengkap}', '${req.body.kelas}', '${req.body.alamat}', '${req.body.email}');`;
-
-  db.query(insertSql, (err, result) => {
-    if (err) throw err;
-    res.redirect("/");
-  });
-});
-
-app.put("/update/:id", (req, res) => {
-  const updateSql = `UPDATE users SET nim='${req.body.nim}', nama_lengkap='${req.body.nama_lengkap}', kelas='${req.body.kelas}', alamat='${req.body.alamat}', email='${req.body.email}' WHERE id = ${req.body.id}`;
-
-  db.query(updateSql, (err, result) => {
-    if (err) throw err;
-    res.redirect("/");
-  });
 });
 
 db.connect((err) => {

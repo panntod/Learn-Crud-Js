@@ -13,29 +13,34 @@
   </head>
   <body>
     <div>
-      <form action="/update" method="post" class="container">
-        <input type="hidden" name="id" value="<%= users.id %>" />
+      <form action="/update/<%= users[0].id %>" method="post" class="container">
+        <input type="hidden" name="id" value="<%= users[0].id %>" />
         <div class="mb-3">
           <label for="nim" class="form-label">NIM</label>
           <input
             type="number"
             name="nim"
-            value="<%= users.nim %>"
+            value="<%= users[0].nim %>"
             class="form-control"
           />
-          <div id="emailHelp" class="form-text">Masukkan NIM Anda.</div>
+          <div class="form-text">Masukkan NIM Anda.</div>
         </div>
         <div class="mb-3">
           <label for="nama_lengkap" class="form-label">Nama Lengkap</label>
-          <input type="text" name="nama_lengkap" value="<%= users.nama_lengkap %>" class="form-control"/>
+          <input
+            type="text"
+            name="nama_lengkap"
+            value="<%= users[0].nama_lengkap %>"
+            class="form-control"
+          />
         </div>
         <div class="mb-3">
           <label for="kelas" class="form-label">Kelas</label>
-          <input type="text" name="kelas" class="form-control" />
+          <input type="text" name="kelas" value="<%= users[0].kelas %>" class="form-control" />
         </div>
         <div class="mb-3">
           <label for="alamat" class="form-label">Alamat</label>
-          <input type="text" name="alamat" class="form-control" />
+          <input type="text" name="alamat" value="<%= users[0].alamat %>" class="form-control" />
         </div>
         <div class="mb-3">
           <label for="email" class="form-label">Email address</label>
@@ -43,10 +48,11 @@
             type="email"
             name="email"
             class="form-control"
+            value="<%= users[0].email %>"
             aria-describedby="emailHelp"
           />
         </div>
-        <input type="submit" class="btn btn-primary" value="Tambahkan" />
+        <input type="submit" class="btn btn-primary" value="Update" />
       </form>
     </div>
     <script
