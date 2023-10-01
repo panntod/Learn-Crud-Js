@@ -54,8 +54,9 @@ app.post("/update/:id", (req, res) => {
   db.query(updateSql, (err, result) => {
     if (err) {
       console.error(err);
-      res.status(500).json({ message: "Gagal mengupdate data" });
+      window.alert("Gagal mengupdate data");
     } else {
+      window.alert("Sukses mengupdate data");
       res.redirect("/");
     }
   });
@@ -76,7 +77,7 @@ app.get("/delete/:id", (req, res) => {
         console.error(err);
         res.status(500).json({ message: "Gagal menghapus siswa" });
       } else {
-        res.status(200).json({ message: "Sukses menghapus siswa" });
+        res.redirect('/')
       }
     });
   } else {
