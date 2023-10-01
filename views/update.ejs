@@ -10,9 +10,37 @@
       integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
       crossorigin="anonymous"
     />
+    <style>
+      body{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          background: rgb(150, 150, 150);
+      }
+      .card-form{
+          box-shadow: 0 2px 15px rgba(0, 0, 0, .2);
+          background: whitesmoke;
+          width: 45rem;
+          padding: 3rem 1rem;
+          border-radius: 2rem;
+      }
+      .card-form h1{
+          text-align: center;
+      }
+      .tombol{
+          padding: .6rem 1.4rem;
+          border-radius: 1rem;
+      }
+      .center{
+          display: flex;
+          justify-content: center;
+      }
+      </style>
   </head>
   <body>
-    <div>
+    <div class="card-form">
+      <h1>Update Siswa</h1>
       <form action="/update/<%= users[0].id %>" method="post" class="container">
         <input type="hidden" name="id" value="<%= users[0].id %>" />
         <div class="mb-3">
@@ -52,13 +80,15 @@
             aria-describedby="emailHelp"
           />
         </div>
-        <input type="submit" class="btn btn-primary" value="Update" />
+        <div class="center">
+          <input type="submit" class="btn btn-primary tombol" value="Update" />
+        </div>
       </form>
     </div>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
       crossorigin="anonymous"
-    ></script>
+    ></script> 
   </body>
 </html>

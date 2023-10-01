@@ -30,8 +30,8 @@ app.get("/tambah", (req, res) => {
 });
 
 app.post("/tambah", (req, res) => {
-  const insertSql = `INSERT INTO users (id, nim, nama_lengkap, kelas, alamat, email) VALUES 
-    (null, '${req.body.nim}', '${req.body.nama_lengkap}', '${req.body.kelas}', '${req.body.alamat}', '${req.body.email}');`;
+  const insertSql = `INSERT INTO users (nim, nama_lengkap, kelas, alamat, email) VALUES 
+    ('${req.body.nim}', '${req.body.nama_lengkap}', '${req.body.kelas}', '${req.body.alamat}', '${req.body.email}');`;
 
   db.query(insertSql, (err, result) => {
     if (err) throw err;
@@ -54,9 +54,7 @@ app.post("/update/:id", (req, res) => {
   db.query(updateSql, (err, result) => {
     if (err) {
       console.error(err);
-      window.alert("Gagal mengupdate data");
     } else {
-      window.alert("Sukses mengupdate data");
       res.redirect("/");
     }
   });
