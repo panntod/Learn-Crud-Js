@@ -1,5 +1,5 @@
 const express = require("express");
-const mysql = require("mysql");
+const db = require("./database")
 const bodyParser = require("body-parser");
 
 const app = express();
@@ -10,12 +10,12 @@ app.use(express.json());
 app.set("view engine", "ejs");
 app.set("views", "views");
 
-const db = mysql.createConnection({
-  host: "localhost",
-  database: "pandhu",
-  user: "root",
-  password: "",
-});
+// const db = mysql.createConnection({
+//   host: "localhost",
+//   database: "pandhu",
+//   user: "root",
+//   password: "",
+// });
 
 app.get("/", (req, res) => {
   const sql = `SELECT * FROM users`;
