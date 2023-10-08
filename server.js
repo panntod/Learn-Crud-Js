@@ -1,5 +1,5 @@
 const express = require("express");
-const db = require("./database")
+const db = require("./database") 
 const bodyParser = require("body-parser");
 
 const app = express();
@@ -10,6 +10,7 @@ app.use(express.json());
 app.set("view engine", "ejs");
 app.set("views", "views");
 
+// const mysql = require("mysql2")
 // const db = mysql.createConnection({
 //   host: "localhost",
 //   database: "pandhu",
