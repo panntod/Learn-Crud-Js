@@ -33,7 +33,7 @@ router.post("/tambah", async (req, res) => {
 // Rute untuk halaman update siswa
 router.get("/update/:id", async (req, res) => {
   try {
-    const id = req.params.id
+    const id = req.params.id;
     const sql = `SELECT * FROM users WHERE id = ?`;
     db.query(sql, [id], (err, result) => {
       const userData = JSON.parse(JSON.stringify(result));
@@ -49,11 +49,23 @@ router.get("/update/:id", async (req, res) => {
 router.post("/update/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    const updateSql =
-      "UPDATE users SET nim = ?, nama_lengkap = ?, kelas = ?, alamat = ?, email = ? WHERE id = ?";
-    const { nim, nama_lengkap, kelas, alamat, email } = req.body;
-    await db.query(updateSql, [nim, nama_lengkap, kelas, alamat, email, id]);
-    res.redirect("/");
+    const data = {
+      nim: req.body.nim,
+      nama_lengkap: req.body.nama_lengkap,
+      kelas: req.body.kelas,
+      alamat: req.body.alamat,
+      email: req.body.email,
+    };
+    const updateSql = `UPDATE users SET nim = ?, nama_lengkap = ?, kelas = ?, alamat = ?, email = ? WHERE id = ?`;
+
+    db.query(updateSql, [data.nim, data.nama_lengkap, data.kelas, data.alamat, data.email, id], (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Terjadi kesalahan dalam pembaruan siswa.");
+      } else {
+        res.redirect("/");
+      }
+    });
   } catch (err) {
     console.error(err);
     res.status(500).send("Terjadi kesalahan dalam pembaruan siswa.");
