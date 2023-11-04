@@ -69,28 +69,27 @@
           </tr>
         </thead>
         <tbody>
-          <% for(let user of users) { %>
-          <tr>
-            <th scope="row"><p class="paragraf"><%= user.nim %></p></th>
-            <th scope="row"><p class="paragraf"><%= user.nama_lengkap%></p></th>
-            <th scope="row"><p class="paragraf"><%= user.kelas %></p></th>
-            <th scope="row"><p class="paragraf"><%= user.alamat %></p></th>
-            <th scope="row"><p class="paragraf"><%= user.email %></p></th>
-            <th scope="row">
-              <a href="update/<%= user.id %>" class="btn btn-warning text-white rounded-3"
-                ><i class="bi bi-pencil-square"></i
-              ></a>
-
-              <a
-                href="/delete/<%= user.id %>"
-                onclick="return confirm('Apakah anda yakin menghapus data ini?')"
-                class="btn btn-danger rounded-3"
-                ><i class="bi bi-trash"></i
-              ></a>
-            </th>
-          </tr>
-
-          <% } %>
+          <% users.forEach(user => { %>
+            <tr>
+              <th scope="row"><p class="paragraf"><%= user.nim %></p></th>
+              <th scope="row"><p class="paragraf"><%= user.nama_lengkap %></p></th>
+              <th scope="row"><p class="paragraf"><%= user.kelas %></p></th>
+              <th scope="row"><p class="paragraf"><%= user.alamat %></p></th>
+              <th scope="row"><p class="paragraf"><%= user.email %></p></th>
+              <th scope="row">
+                <a href="update/<%= user.id %>" class="btn btn-warning text-white rounded-3"
+                  ><i class="bi bi-pencil-square"></i
+                ></a>
+          
+                <a
+                  href="/delete/<%= user.id %>"
+                  onclick="return confirm('Apakah anda yakin menghapus data ini?')"
+                  class="btn btn-danger rounded-3"
+                  ><i class="bi bi-trash"></i
+                ></a>
+              </th>
+            </tr>
+          <% }); %>          
         </tbody>
       </table>
     </div>
