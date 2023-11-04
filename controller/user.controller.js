@@ -19,11 +19,23 @@ router.get("/tambah", (req, res) => {
 // Rute untuk menambahkan siswa
 router.post("/tambah", async (req, res) => {
   try {
-    const insertSql =
-      "INSERT INTO users (nim, nama_lengkap, kelas, alamat, email) VALUES (?, ?, ?, ?, ?)";
-    const { nim, nama_lengkap, kelas, alamat, email } = req.body;
-    await db.query(insertSql, [nim, nama_lengkap, kelas, alamat, email]);
-    res.redirect("/");
+    const data = {
+      nim: req.body.nim,
+      nama_lengkap: req.body.nama_lengkap,
+      kelas: req.body.kelas,
+      alamat: req.body.alamat,
+      email: req.body.email,
+    };
+    const addUser = `INSERT INTO users (nim, nama_lengkap, kelas, alamat, email) VALUES (?, ?, ?, ?, ?)`;
+
+    db.query(addUser, [data.nim, data.nama_lengkap, data.kelas, data.alamat, data.email], (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Terjadi kesalahan dalam menambahkan siswa.");
+      } else {
+        res.redirect("/");
+      }
+    });
   } catch (err) {
     console.error(err);
     res.status(500).send("Terjadi kesalahan dalam penambahan siswa.");
