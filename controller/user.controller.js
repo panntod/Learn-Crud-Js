@@ -4,7 +4,7 @@ const db = require("../database");
 
 // Rute untuk halaman utama
 router.get("/", (req, res) => {
-  const sql = `SELECT * FROM users`;
+  const sql = `SELECT * FROM users ORDER BY nim ASC;`;
   db.query(sql, (err, result) => {
     const users = JSON.parse(JSON.stringify(result));
     res.render("index", { users: users, title: "Daftar Siswa" });
@@ -13,7 +13,7 @@ router.get("/", (req, res) => {
 
 // Rute untuk halaman tambah siswa
 router.get("/tambah", (req, res) => {
-  res.render("tambah");
+  res.render("tambah", {title: "Tambah Siswa"});
 });
 
 // Rute untuk menambahkan siswa
@@ -49,7 +49,7 @@ router.get("/update/:id", async (req, res) => {
     const sql = `SELECT * FROM users WHERE id = ?`;
     db.query(sql, [id], (err, result) => {
       const userData = JSON.parse(JSON.stringify(result));
-      res.render("update", { users: userData });
+      res.render("update", { users: userData, title: "Update Siswa" });
     });
   } catch (err) {
     console.error(err);
@@ -104,7 +104,7 @@ router.get("/delete/:id", (req, res) => {
       }
     });
   } else {
-    res.status(400).json({ message: "ID siswa tidak valid" });
+    res.status(404).json({ message: "ID siswa tidak valid" });
   }
 });
 
