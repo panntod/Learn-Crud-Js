@@ -11,20 +11,13 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: rgb(150, 150, 150);
+            background: rgb(180, 180, 180);
         }
         .card-form{
             box-shadow: 0 2px 15px rgba(0, 0, 0, .2);
             background: whitesmoke;
             width: 45rem;
             padding: 3rem 1rem;
-            border-radius: 2rem;
-        }
-        .card-form h1{
-            text-align: center;
-        }
-        .tombol{
-            padding: .6rem 1.4rem;
             border-radius: 1rem;
         }
         .center{
@@ -35,31 +28,32 @@
 </head>
 <body>
     <div class="card-form">
-        <h1>Tambah Siswa</h1>
+        <h2 class="text-center"><%= title %></h2>
         <form action="/tambah" method="post" class="container">
             <div class="mb-3">
                 <label for="nim" class="form-label">NIM</label>
-                <input type="number" name="nim" class="form-control bg-light" placeholder="Number...">
+                <input required type="number" name="nim" class="form-control bg-light" placeholder="NIM"/>
                 <div id="emailHelp" class="form-text">Masukan NIM Kamu.</div>
             </div>
             <div class="mb-3">
                 <label for="nama_lengkap" class="form-label">Nama Lengkap</label>
-                <input type="text" name="nama_lengkap" class="form-control" placeholder="Name...">
+                <input required type="text" name="nama_lengkap" class="form-control" placeholder="Enter Your Name">
             </div>
             <div class="mb-3">
                 <label for="kelas" class="form-label">Kelas</label>
-                <input type="text" name="kelas" class="form-control" placeholder="Class...">
+                <input required type="text" name="kelas" class="form-control" placeholder="Enter Your Class">
             </div>
             <div class="mb-3">
                 <label for="alamat" class="form-label">Alamat</label>
-                <input type="text" name="alamat" class="form-control" placeholder="Adress...">
+                <input required type="text" name="alamat" class="form-control" placeholder="Enter Your Adress">
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email address</label>
-                <input type="email" name="email" class="form-control" aria-describedby="emailHelp" placeholder="@gmail.com">
+                <input required type="email" name="email" class="form-control" aria-describedby="emailHelp"
+                    placeholder="Enter Your Email">
             </div>
             <div class="center">
-                <input type="submit" class="btn btn-primary tombol" value="Tambahkan">
+                <input type="submit" class="btn btn-primary px-4 py-2 rounded shadow" value="Tambahkan">
             </div>
         </form>
     </div>
