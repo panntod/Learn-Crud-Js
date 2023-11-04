@@ -33,11 +33,12 @@ router.post("/tambah", async (req, res) => {
 // Rute untuk halaman update siswa
 router.get("/update/:id", async (req, res) => {
   try {
-    const id = req.params.id;
-    const sql = "SELECT * FROM users WHERE id = ?";
-    const result = await db.query(sql, [id]);
-    const userData = JSON.parse(JSON.stringify(result));
-    res.render("update", { users: userData });
+    const id = req.params.id
+    const sql = `SELECT * FROM users WHERE id = ?`;
+    db.query(sql, [id], (err, result) => {
+      const userData = JSON.parse(JSON.stringify(result));
+      res.render("update", { users: userData });
+    });
   } catch (err) {
     console.error(err);
     res.status(500).send("Terjadi kesalahan dalam pengambilan data siswa.");
@@ -61,7 +62,7 @@ router.post("/update/:id", async (req, res) => {
 
 // Rute untuk menghapus siswa
 router.get("/delete/:id", (req, res) => {
-  const id_siswa = req.params.id; 
+  const id_siswa = req.params.id;
   if (id_siswa) {
     if (isNaN(id_siswa)) {
       res.status(400).json({ message: "ID siswa tidak valid" });
@@ -75,7 +76,7 @@ router.get("/delete/:id", (req, res) => {
         console.error(err);
         res.status(500).json({ message: "Gagal menghapus siswa" });
       } else {
-        res.redirect('/')
+        res.redirect("/");
       }
     });
   } else {
