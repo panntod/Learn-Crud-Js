@@ -31,26 +31,32 @@ router.post("/tambah", async (req, res) => {
 });
 
 // Rute untuk halaman update siswa
-router.get("/update/:id", (req, res) => {
-  const sql = `SELECT * FROM users WHERE id = ${req.params.id}`;
-  db.query(sql, (err, result) => {
+router.get("/update/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const sql = "SELECT * FROM users WHERE id = ?";
+    const result = await db.query(sql, [id]);
     const userData = JSON.parse(JSON.stringify(result));
     res.render("update", { users: userData });
-  });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Terjadi kesalahan dalam pengambilan data siswa.");
+  }
 });
 
 // Rute untuk mengupdate siswa
-router.post("/update/:id", (req, res) => {
-  const id = req.params.id;
-  const updateSql = `UPDATE users SET nim='${req.body.nim}', nama_lengkap='${req.body.nama_lengkap}', kelas='${req.body.kelas}', alamat='${req.body.alamat}', email='${req.body.email}' WHERE id = ${id}`;
-
-  db.query(updateSql, (err, result) => {
-    if (err) {
-      console.error(err);
-    } else {
-      res.redirect("/");
-    }
-  });
+router.post("/update/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const updateSql =
+      "UPDATE users SET nim = ?, nama_lengkap = ?, kelas = ?, alamat = ?, email = ? WHERE id = ?";
+    const { nim, nama_lengkap, kelas, alamat, email } = req.body;
+    await db.query(updateSql, [nim, nama_lengkap, kelas, alamat, email, id]);
+    res.redirect("/");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Terjadi kesalahan dalam pembaruan siswa.");
+  }
 });
 
 // Rute untuk menghapus siswa
